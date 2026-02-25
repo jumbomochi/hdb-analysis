@@ -2,7 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 data/raw/
-data/processed/
-models/*.joblib
-.streamlit/
+.streamlit/secrets.toml
 *.egg-info/
