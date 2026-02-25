@@ -25,7 +25,7 @@ def calculate_remaining_lease(
 
     Either from commence_year + reference_year, or by parsing a string like '61 years 04 months'.
     """
-    if remaining_str:
+    if remaining_str and isinstance(remaining_str, str):
         match = re.match(r"(\d+)\s*years?\s*(?:(\d+)\s*months?)?", remaining_str)
         if match:
             years = int(match.group(1))

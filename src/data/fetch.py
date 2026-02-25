@@ -24,26 +24,37 @@ DATASETS = {
 }
 
 
-def fetch_dataset(dataset_id: str, limit: int = 1000) -> list[dict]:
+def fetch_dataset(dataset_id: str, limit: int = 5000, max_retries: int = 5) -> list[dict]:
     """Fetch all records from a single dataset via pagination."""
     records = []
     offset = 0
 
     while True:
-        resp = requests.get(
-            BASE_URL,
-            params={"resource_id": dataset_id, "limit": limit, "offset": offset},
-            timeout=30,
-        )
-        resp.raise_for_status()
+        for attempt in range(max_retries):
+            resp = requests.get(
+                BASE_URL,
+                params={"resource_id": dataset_id, "limit": limit, "offset": offset},
+                timeout=60,
+            )
+            if resp.status_code == 429:
+                wait = 2 ** attempt * 2
+                print(f"  Rate limited, waiting {wait}s...")
+                time.sleep(wait)
+                continue
+            resp.raise_for_status()
+            break
+        else:
+            resp.raise_for_status()
+
         result = resp.json()["result"]
         batch = result["records"]
         records.extend(batch)
+        print(f"  Fetched {len(records)}/{result['total']} records...")
 
         if offset + limit >= result["total"]:
             break
         offset += limit
-        time.sleep(0.3)
+        time.sleep(1)
 
     return records
 
