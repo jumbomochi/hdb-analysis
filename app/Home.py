@@ -74,11 +74,12 @@ for col, card in zip(cols, NAV_CARDS):
             background: {CARD_BG};
             border: 1px solid {SLATE_200};
             border-radius: 12px;
-            padding: 24px 20px;
-            height: 180px;
+            padding: clamp(14px, 3vw, 24px) clamp(12px, 2.5vw, 20px);
+            min-height: auto;
+            margin-bottom: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         ">
-            <div style="font-size: 1.8rem; margin-bottom: 8px;">{card['icon']}</div>
+            <div style="font-size: clamp(1.3rem, 4vw, 1.8rem); margin-bottom: 8px;">{card['icon']}</div>
             <div style="font-weight: 700; font-size: 1rem; margin-bottom: 6px; color: {EMERALD};">
                 {card['title']}
             </div>

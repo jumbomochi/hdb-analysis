@@ -92,10 +92,10 @@ if submitted:
             background: {bg_color};
             border-left: 5px solid {border_color};
             border-radius: 0 12px 12px 0;
-            padding: 20px 24px;
+            padding: clamp(12px, 3vw, 20px) clamp(14px, 3vw, 24px);
             margin: 8px 0 20px 0;
         ">
-            <div style="font-size: 1.4rem; font-weight: 700; color: {text_color};">
+            <div style="font-size: clamp(1rem, 3vw, 1.4rem); font-weight: 700; color: {text_color};">
                 {verdict}
             </div>
             <div style="font-size: 0.95rem; color: {SLATE_500}; margin-top: 4px;">

@@ -70,7 +70,7 @@ if submitted:
             background: {CARD_BG};
             border: 2px solid {EMERALD};
             border-radius: 16px;
-            padding: 32px;
+            padding: clamp(16px, 4vw, 32px);
             text-align: center;
             margin: 16px 0 24px 0;
             box-shadow: 0 2px 8px rgba(107, 127, 58, 0.12);
@@ -78,7 +78,7 @@ if submitted:
             <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: {SLATE_500}; margin-bottom: 4px;">
                 Estimated Fair Price
             </div>
-            <div style="font-size: 2.8rem; font-weight: 800; color: {EMERALD};">
+            <div style="font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 800; color: {EMERALD};">
                 ${estimate:,.0f}
             </div>
             <div style="font-size: 0.9rem; color: {SLATE_500}; margin-top: 4px;">

@@ -92,6 +92,23 @@ def inject_custom_css() -> None:
             border-radius: 8px;
             background: {CARD_BG};
         }}
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {{
+            [data-testid="stMetric"] {{
+                padding: 12px 14px;
+            }}
+            [data-testid="stMetricValue"] {{
+                font-size: 1.3rem;
+            }}
+            [data-testid="stForm"] {{
+                padding: 16px;
+            }}
+            .stTabs [data-baseweb="tab"] {{
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }}
+        }}
         </style>
         """,
         unsafe_allow_html=True,
