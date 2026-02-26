@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from app.data_loader import load_processed_data, load_prediction_models, get_towns, get_flat_types
-from app.styles import inject_custom_css, apply_chart_style, EMERALD, RED, AMBER, SLATE_500, SLATE_200, SLATE_900
+from app.styles import inject_custom_css, apply_chart_style, BLUE, RED, GOLD, SLATE_500, SLATE_200, SLATE_900
 from src.model.predict import predict_price, find_comparable_transactions
 
 st.set_page_config(page_title="Listing Evaluator", layout="wide")
@@ -71,9 +71,9 @@ if submitted:
     # Verdict
     if diff_pct < -5:
         verdict = "Below Market — Potential Bargain"
-        bg_color = "rgba(107, 127, 58, 0.08)"
-        border_color = EMERALD
-        text_color = EMERALD
+        bg_color = "rgba(0, 50, 98, 0.08)"
+        border_color = BLUE
+        text_color = BLUE
     elif diff_pct > 5:
         verdict = "Above Market — Overpriced"
         bg_color = "rgba(194, 65, 12, 0.08)"
@@ -81,9 +81,9 @@ if submitted:
         text_color = RED
     else:
         verdict = "Fairly Priced"
-        bg_color = "rgba(217, 119, 6, 0.08)"
-        border_color = AMBER
-        text_color = AMBER
+        bg_color = "rgba(253, 181, 21, 0.08)"
+        border_color = GOLD
+        text_color = GOLD
 
     # Verdict banner
     st.markdown(
@@ -155,7 +155,7 @@ if submitted:
                     y=trend_data["resale_price"],
                     mode="lines",
                     name="Median Price",
-                    line=dict(color=EMERALD, width=2.5),
+                    line=dict(color=BLUE, width=2.5),
                 )
             )
 
@@ -164,8 +164,8 @@ if submitted:
                 annotation_text="Asking Price", annotation_font_color=RED,
             )
             fig.add_hline(
-                y=estimate, line_dash="dash", line_color=EMERALD,
-                annotation_text="Model Estimate", annotation_font_color=EMERALD,
+                y=estimate, line_dash="dash", line_color=BLUE,
+                annotation_text="Model Estimate", annotation_font_color=BLUE,
             )
 
             fig.update_layout(

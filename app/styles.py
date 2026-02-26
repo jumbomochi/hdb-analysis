@@ -4,21 +4,21 @@ import streamlit as st
 import plotly.graph_objects as go
 
 # ---------------------------------------------------------------------------
-# Color palette — Warm Sage
+# Color palette — UC Berkeley Blue & Gold
 # ---------------------------------------------------------------------------
-EMERALD = "#6B7F3A"        # olive green (primary accent)
-EMERALD_DARK = "#556632"   # darker olive
+BLUE = "#003262"           # Berkeley Blue (primary accent)
+BLUE_DARK = "#002145"      # darker primary
 RED = "#C2410C"            # burnt orange (negative)
-AMBER = "#D97706"          # amber (neutral/fair)
-SLATE_900 = "#3C3B35"      # charcoal brown (headings)
-SLATE_700 = "#57564E"      # warm dark gray (body text)
-SLATE_500 = "#7C7B72"      # warm medium gray (captions)
-SLATE_200 = "#DDDCD4"      # warm light border
-SLATE_100 = "#EFEEE6"      # light olive (secondary bg)
-BG = "#F8F7F2"             # sage cream (page bg)
-CARD_BG = "#FDFDF8"        # warm white (cards)
+GOLD = "#FDB515"           # California Gold (highlight/fair)
+SLATE_900 = "#1B1B1B"      # cool black (headings)
+SLATE_700 = "#3B3B3B"      # cool dark gray (body text)
+SLATE_500 = "#6B7280"      # cool medium gray (captions)
+SLATE_200 = "#D1D5DB"      # cool light border
+SLATE_100 = "#EEF2F7"      # blue-tint (secondary bg)
+BG = "#F7F9FC"             # cool white (page bg)
+CARD_BG = "#FFFFFF"        # pure white (cards)
 
-COLORWAY = [EMERALD, "#B45309", AMBER, RED, "#7C6F4A", "#A0785A", "#6B8E6B", "#D4A76A"]
+COLORWAY = [BLUE, "#1E40AF", GOLD, "#D97706", "#3B82F6", "#60A5FA", "#92400E", "#F59E0B"]
 
 
 def inject_custom_css() -> None:
@@ -132,7 +132,7 @@ def apply_chart_style(fig: go.Figure) -> go.Figure:
             font=dict(color=SLATE_900, size=13),
         ),
         legend=dict(
-            bgcolor="rgba(253,253,248,0.9)",
+            bgcolor="rgba(255,255,255,0.9)",
             bordercolor=SLATE_200,
             borderwidth=1,
             font=dict(size=12),
@@ -163,15 +163,15 @@ def render_price_map(df, height: int = 500) -> None:
         st.info("No geo-coded data available for the map.")
         return
 
-    # Normalize price to color mapping (olive green = low, burnt orange = high)
+    # Normalize price to color mapping (blue = low, gold = high)
     p_min = map_df["median_price"].min()
     p_max = map_df["median_price"].max()
     p_range = p_max - p_min if p_max != p_min else 1
     map_df["_norm"] = (map_df["median_price"] - p_min) / p_range
-    # Olive (107,127,58) -> Burnt orange (194,65,12)
-    map_df["r"] = (107 + map_df["_norm"] * (194 - 107)).astype(int).clip(0, 255)
-    map_df["g"] = (127 - map_df["_norm"] * (127 - 65)).astype(int).clip(0, 255)
-    map_df["b"] = (58 - map_df["_norm"] * (58 - 12)).astype(int).clip(0, 255)
+    # Blue (0,50,98) -> Gold (253,181,21)
+    map_df["r"] = (0 + map_df["_norm"] * (253 - 0)).astype(int).clip(0, 255)
+    map_df["g"] = (50 + map_df["_norm"] * (181 - 50)).astype(int).clip(0, 255)
+    map_df["b"] = (98 - map_df["_norm"] * (98 - 21)).astype(int).clip(0, 255)
 
     # Radius based on transaction count
     count_max = map_df["count"].max() if map_df["count"].max() > 0 else 1

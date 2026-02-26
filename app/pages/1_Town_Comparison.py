@@ -11,7 +11,7 @@ import plotly.express as px
 import streamlit as st
 
 from app.data_loader import load_processed_data, get_towns, get_flat_types, get_map_data
-from app.styles import inject_custom_css, apply_chart_style, render_price_map, EMERALD
+from app.styles import inject_custom_css, apply_chart_style, render_price_map, BLUE
 
 st.set_page_config(page_title="Town Comparison", layout="wide")
 inject_custom_css()
@@ -91,7 +91,7 @@ with tab_overview:
             labels={"resale_price": "Median Price (SGD)", "town": "Town"},
         )
         fig.update_traces(
-            marker_color=EMERALD,
+            marker_color=BLUE,
             text=town_median["resale_price"].apply(lambda v: f"${v:,.0f}"),
             textposition="outside",
             textfont_size=10,
@@ -164,7 +164,7 @@ with tab_trends:
 # --- Tab 3: Map View ---
 with tab_map:
     st.subheader("Transaction Map")
-    st.caption("Blocks color-coded by median price — olive (lower) to orange (higher)")
+    st.caption("Blocks color-coded by median price — blue (lower) to gold (higher)")
     map_df = get_map_data(filtered)
     render_price_map(map_df, height=550)
 
