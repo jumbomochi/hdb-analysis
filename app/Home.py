@@ -4,7 +4,7 @@
 import streamlit as st
 
 from app.data_loader import load_processed_data, get_map_data, get_kpi_data
-from app.styles import inject_custom_css, render_price_map, EMERALD, SLATE_500, SLATE_200
+from app.styles import inject_custom_css, render_price_map, EMERALD, SLATE_500, SLATE_200, CARD_BG
 
 st.set_page_config(
     page_title="HDB Resale Valuation",
@@ -33,7 +33,7 @@ k4.metric("Median Price / sqm", f"${kpis['median_psm']:,.0f}")
 # Hero Map
 # ---------------------------------------------------------------------------
 st.markdown("### Transaction Map")
-st.caption("Each dot represents a block — color indicates median price (green = lower, red = higher)")
+st.caption("Each dot represents a block — color indicates median price (olive = lower, orange = higher)")
 
 map_data = get_map_data(df)
 render_price_map(map_data, height=520)
@@ -71,12 +71,12 @@ for col, card in zip(cols, NAV_CARDS):
     col.markdown(
         f"""
         <div style="
-            background: #FFFFFF;
+            background: {CARD_BG};
             border: 1px solid {SLATE_200};
             border-radius: 12px;
             padding: 24px 20px;
             height: 180px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         ">
             <div style="font-size: 1.8rem; margin-bottom: 8px;">{card['icon']}</div>
             <div style="font-weight: 700; font-size: 1rem; margin-bottom: 6px; color: {EMERALD};">

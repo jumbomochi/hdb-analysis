@@ -12,7 +12,7 @@ import pandas as pd
 import streamlit as st
 
 from app.data_loader import load_processed_data, load_prediction_models, get_towns, get_flat_types
-from app.styles import inject_custom_css, EMERALD, SLATE_500, SLATE_200, SLATE_900
+from app.styles import inject_custom_css, EMERALD, SLATE_500, SLATE_200, SLATE_900, CARD_BG
 from src.model.predict import predict_price, find_comparable_transactions
 
 st.set_page_config(page_title="Fair Price Estimator", layout="wide")
@@ -67,13 +67,13 @@ if submitted:
     st.markdown(
         f"""
         <div style="
-            background: #FFFFFF;
+            background: {CARD_BG};
             border: 2px solid {EMERALD};
             border-radius: 16px;
             padding: 32px;
             text-align: center;
             margin: 16px 0 24px 0;
-            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);
+            box-shadow: 0 2px 8px rgba(107, 127, 58, 0.12);
         ">
             <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: {SLATE_500}; margin-bottom: 4px;">
                 Estimated Fair Price

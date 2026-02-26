@@ -4,20 +4,21 @@ import streamlit as st
 import plotly.graph_objects as go
 
 # ---------------------------------------------------------------------------
-# Color palette
+# Color palette — Warm Sage
 # ---------------------------------------------------------------------------
-EMERALD = "#10B981"
-EMERALD_DARK = "#059669"
-RED = "#EF4444"
-AMBER = "#F59E0B"
-SLATE_900 = "#0F172A"
-SLATE_700 = "#334155"
-SLATE_500 = "#64748B"
-SLATE_200 = "#E2E8F0"
-SLATE_100 = "#F1F5F9"
-BG = "#F8FAFC"
+EMERALD = "#6B7F3A"        # olive green (primary accent)
+EMERALD_DARK = "#556632"   # darker olive
+RED = "#C2410C"            # burnt orange (negative)
+AMBER = "#D97706"          # amber (neutral/fair)
+SLATE_900 = "#3C3B35"      # charcoal brown (headings)
+SLATE_700 = "#57564E"      # warm dark gray (body text)
+SLATE_500 = "#7C7B72"      # warm medium gray (captions)
+SLATE_200 = "#DDDCD4"      # warm light border
+SLATE_100 = "#EFEEE6"      # light olive (secondary bg)
+BG = "#F8F7F2"             # sage cream (page bg)
+CARD_BG = "#FDFDF8"        # warm white (cards)
 
-COLORWAY = [EMERALD, "#3B82F6", AMBER, RED, "#8B5CF6", "#EC4899", "#06B6D4", "#F97316"]
+COLORWAY = [EMERALD, "#B45309", AMBER, RED, "#7C6F4A", "#A0785A", "#6B8E6B", "#D4A76A"]
 
 
 def inject_custom_css() -> None:
@@ -32,11 +33,11 @@ def inject_custom_css() -> None:
 
         /* Metric cards */
         [data-testid="stMetric"] {{
-            background: #FFFFFF;
+            background: {CARD_BG};
             border: 1px solid {SLATE_200};
             border-radius: 12px;
             padding: 16px 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }}
         [data-testid="stMetricValue"] {{
             font-size: 1.8rem;
@@ -55,11 +56,11 @@ def inject_custom_css() -> None:
 
         /* Form containers */
         [data-testid="stForm"] {{
-            background: #FFFFFF;
+            background: {CARD_BG};
             border: 1px solid {SLATE_200};
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }}
 
         /* Dataframe containers */
@@ -81,7 +82,7 @@ def inject_custom_css() -> None:
 
         /* Sidebar */
         section[data-testid="stSidebar"] {{
-            background: #FFFFFF;
+            background: {CARD_BG};
             border-right: 1px solid {SLATE_200};
         }}
 
@@ -89,7 +90,7 @@ def inject_custom_css() -> None:
         [data-testid="stExpander"] {{
             border: 1px solid {SLATE_200};
             border-radius: 8px;
-            background: #FFFFFF;
+            background: {CARD_BG};
         }}
         </style>
         """,
@@ -109,12 +110,12 @@ def apply_chart_style(fig: go.Figure) -> go.Figure:
         xaxis=dict(gridcolor=SLATE_200, gridwidth=1),
         yaxis=dict(gridcolor=SLATE_200, gridwidth=1),
         hoverlabel=dict(
-            bgcolor="#FFFFFF",
+            bgcolor=CARD_BG,
             bordercolor=SLATE_200,
             font=dict(color=SLATE_900, size=13),
         ),
         legend=dict(
-            bgcolor="rgba(255,255,255,0.8)",
+            bgcolor="rgba(253,253,248,0.9)",
             bordercolor=SLATE_200,
             borderwidth=1,
             font=dict(size=12),
@@ -145,14 +146,15 @@ def render_price_map(df, height: int = 500) -> None:
         st.info("No geo-coded data available for the map.")
         return
 
-    # Normalize price to 0-255 for color mapping (green = low, red = high)
+    # Normalize price to color mapping (olive green = low, burnt orange = high)
     p_min = map_df["median_price"].min()
     p_max = map_df["median_price"].max()
     p_range = p_max - p_min if p_max != p_min else 1
     map_df["_norm"] = (map_df["median_price"] - p_min) / p_range
-    map_df["r"] = (map_df["_norm"] * 239).astype(int).clip(0, 255)
-    map_df["g"] = ((1 - map_df["_norm"]) * 185).astype(int).clip(0, 255)
-    map_df["b"] = 69
+    # Olive (107,127,58) -> Burnt orange (194,65,12)
+    map_df["r"] = (107 + map_df["_norm"] * (194 - 107)).astype(int).clip(0, 255)
+    map_df["g"] = (127 - map_df["_norm"] * (127 - 65)).astype(int).clip(0, 255)
+    map_df["b"] = (58 - map_df["_norm"] * (58 - 12)).astype(int).clip(0, 255)
 
     # Radius based on transaction count
     count_max = map_df["count"].max() if map_df["count"].max() > 0 else 1
@@ -175,7 +177,7 @@ def render_price_map(df, height: int = 500) -> None:
             "Transactions: {count}"
         ),
         "style": {
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": CARD_BG,
             "color": SLATE_900,
             "border": f"1px solid {SLATE_200}",
             "borderRadius": "8px",

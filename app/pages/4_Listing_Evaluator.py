@@ -71,17 +71,17 @@ if submitted:
     # Verdict
     if diff_pct < -5:
         verdict = "Below Market — Potential Bargain"
-        bg_color = "rgba(16, 185, 129, 0.08)"
+        bg_color = "rgba(107, 127, 58, 0.08)"
         border_color = EMERALD
         text_color = EMERALD
     elif diff_pct > 5:
         verdict = "Above Market — Overpriced"
-        bg_color = "rgba(239, 68, 68, 0.08)"
+        bg_color = "rgba(194, 65, 12, 0.08)"
         border_color = RED
         text_color = RED
     else:
         verdict = "Fairly Priced"
-        bg_color = "rgba(245, 158, 11, 0.08)"
+        bg_color = "rgba(217, 119, 6, 0.08)"
         border_color = AMBER
         text_color = AMBER
 

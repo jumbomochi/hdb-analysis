@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from app.data_loader import load_processed_data, load_prediction_models, get_flat_types
-from app.styles import inject_custom_css, apply_chart_style, EMERALD, EMERALD_DARK
+from app.styles import inject_custom_css, apply_chart_style, EMERALD, EMERALD_DARK, RED, CARD_BG
 
 st.set_page_config(page_title="Price Drivers", layout="wide")
 inject_custom_css()
@@ -108,7 +108,7 @@ with tab_pdp:
                     mode="lines",
                     line=dict(color=EMERALD, width=3),
                     fill="tozeroy",
-                    fillcolor="rgba(16, 185, 129, 0.1)",
+                    fillcolor="rgba(107, 127, 58, 0.1)",
                 )
             )
             fig.update_layout(
@@ -131,7 +131,7 @@ with tab_corr:
     fig = px.imshow(
         corr,
         text_auto=".2f",
-        color_continuous_scale=[[0, "#EF4444"], [0.5, "#FFFFFF"], [1, EMERALD]],
+        color_continuous_scale=[[0, RED], [0.5, CARD_BG], [1, EMERALD]],
         zmin=-1,
         zmax=1,
     )

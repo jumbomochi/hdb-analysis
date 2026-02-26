@@ -164,7 +164,7 @@ with tab_trends:
 # --- Tab 3: Map View ---
 with tab_map:
     st.subheader("Transaction Map")
-    st.caption("Blocks color-coded by median price — green (lower) to red (higher)")
+    st.caption("Blocks color-coded by median price — olive (lower) to orange (higher)")
     map_df = get_map_data(filtered)
     render_price_map(map_df, height=550)
 
